@@ -1,18 +1,18 @@
-import datetime as dt
+import datetime as dt                                                                                                   # import date and time librery
 
-def time_formater (txt):
-    return dt.datetime.strptime(txt, "%H:%M")
+def time_formater (txt):                                                                                                # function string converter to time
+    return dt.datetime.strptime(txt, "%H:%M")                                                                               # converts string to time
 
-def text_formater (txt):
-    text = txt.strip().lower()
-    preFormetedText = text.translate({ord(i): None for i in '.,/-_!#@ -+=$"()'})
-    formatedText = list("".join(text))
-    timeDetectHelper = formatedText.index(":")
-    result = "".join(formatedText[:(timeDetectHelper+3)])
-    if type(time_formater(result)) in (dt.datetime, dt.time) and len(preFormetedText) <= 5:
-        return time_formater(result)
-    elif type(time_formater(result)) in (dt.datetime, dt.time) and len(preFormetedText) > 5 \
-            and "pm" in preFormetedText and result[0:2] == "12":
+def text_formater (txt):                                                                                                # function for string format
+    text = txt.strip().lower()                                                                                              # remove extra spaces and meka lower
+    preFormetedText = text.translate({ord(i): None for i in '.,/-_!#@ -+=$"()'})                                            # remove unwonted symbols
+    formatedText = list("".join(text))                                                                                      # spit strings by character    
+    timeDetectHelper = formatedText.index(":")                                                                              # get ":" index
+    result = "".join(formatedText[:(timeDetectHelper+3)])                                                                   # extract time as string
+    if type(time_formater(result)) in (dt.datetime, dt.time) and len(preFormetedText) <= 5:                                 # check if string is real time value and do not includes am/pm
+        return time_formater(result)                                                                                        # return string converted to time
+    elif type(time_formater(result)) in (dt.datetime, dt.time) and len(preFormetedText) > 5 \                               
+            and "pm" in preFormetedText and result[0:2] == "12":                                                            
         return time_formater(result)
     elif type(time_formater(result)) in (dt.datetime, dt.time) and len(preFormetedText) > 5 \
             and "pm" in preFormetedText:
@@ -36,4 +36,3 @@ def main():
         print("Stop eating")
 
 main()
-
